@@ -46,7 +46,6 @@ const Board = () => {
           </button>
         </div>
       </div>
-      <p>{currGuess}</p>
     </div>
   );
 };

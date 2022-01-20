@@ -14,12 +14,14 @@ const GuessList = ({ guesses }: props) => {
     let colors = guessRes.colors;
     let chars = [];
     for (let i = 0; i < WORD_LENGTH; i++) {
-      let color = colors && colors[i] ? colors[i] : "my-gray";
-      const className = `w-10 h-10 rounded-lg flex items-center justify-center text-white font-semibold bg-${color}`;
+      let color = colors && colors[i] ? colors[i] : "gunsmoke";
+      // const className = ;
       chars.push(
         <li key={i}>
           <label>
-            <div className={className}>
+            <div
+              className={`w-10 h-10 rounded-lg flex items-center justify-center text-white font-semibold bg-${color}-500`}
+            >
               {guess && guess[i] ? guess[i].toUpperCase() : ""}
             </div>
           </label>

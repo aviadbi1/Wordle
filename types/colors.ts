@@ -1,7 +1,7 @@
 enum Colors {
-  "green" = "my-green",
-  "yellow" = "my-yellow",
-  "gray" = "my-gray",
+  "green" = "fruit-salad",
+  "yellow" = "sundance",
+  "gray" = "gunsmoke",
 }
 
 export default Colors;
