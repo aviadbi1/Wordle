@@ -1,11 +1,15 @@
-import { useState } from "react";
-import { checkGuess } from "../lib/api";
+import { useEffect, useState } from "react";
+import { checkGuess, getRandomWord } from "../lib/api";
 import GuessResponseType from "../types/guessResponse";
 import GuessList from "./guess-list";
 
 const Board = () => {
   const [guesses, setGuesses] = useState<GuessResponseType[]>([]);
   const [currGuess, setCurrGuess] = useState("");
+
+  useEffect(() => {
+    getRandomWord();
+  }, []);
 
   const clearCurrGuess = () => {
     setCurrGuess("");
