@@ -15,15 +15,22 @@ const GuessList = ({ guesses }: props) => {
     let chars = [];
     for (let i = 0; i < WORD_LENGTH; i++) {
       let color = colors && colors[i] ? colors[i] : "gunsmoke";
-      // const className = ;
       chars.push(
         <li key={i}>
           <label>
-            <div
-              className={`w-10 h-10 rounded-lg flex items-center justify-center text-white font-semibold bg-${color}-500`}
-            >
-              {guess && guess[i] ? guess[i].toUpperCase() : ""}
-            </div>
+            {guess && guess[i] ? (
+              <div
+                className={`w-10 h-10 rounded-lg flex items-center justify-center text-white font-semibold bg-${color}-500`}
+              >
+                {guess[i].toUpperCase()}
+              </div>
+            ) : (
+              <div
+                className={`w-10 h-10 rounded-lg flex items-center justify-center text-white font-semibold bg-gunsmoke-900`}
+              >
+                {""}
+              </div>
+            )}
           </label>
         </li>
       );

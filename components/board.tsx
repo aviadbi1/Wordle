@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { checkGuess } from "../lib/api";
-import Colors from "../types/colors";
 import GuessResponseType from "../types/guessResponse";
 import GuessList from "./guess-list";
 
@@ -21,10 +20,18 @@ const Board = () => {
   return (
     <div>
       <input
-        name="guess"
+        className="focus:ring-2 focus:ring-blue-500 focus:outline-none mb-4 text-base leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 pl-10 ring-1 ring-slate-200 shadow-sm"
         type="text"
+        placeholder="Guess..."
         value={currGuess}
-        onChange={(e) => setCurrGuess(e.target.value.trim().substring(0, 5))}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            guessThatWord();
+          }
+        }}
+        onChange={(e) =>
+          setCurrGuess(e.target.value.trim().substring(0, 5).toUpperCase())
+        }
       />
       <GuessList guesses={guesses} />
 
