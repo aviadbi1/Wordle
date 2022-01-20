@@ -1,18 +1,26 @@
 import { WORD_LENGTH } from "../lib/constants";
+import GuessResponseType from "../types/guessResponse";
 
 type props = {
-  guesses: string[];
+  guesses: GuessResponseType[];
 };
 
 const GuessList = ({ guesses }: props) => {
-  const placeChars = (guess: string) => {
+  const placeChars = (guessRes: GuessResponseType) => {
+    if (!guessRes) {
+      guessRes = { guess: "", correct: false, colors: [] };
+    }
+    let guess = guessRes.guess;
+    let colors = guessRes.colors;
     let chars = [];
-    for (let index = 0; index < WORD_LENGTH; index++) {
+    for (let i = 0; i < WORD_LENGTH; i++) {
+      let color = colors && colors[i] ? colors[i] : "my-gray";
+      const className = `w-10 h-10 rounded-lg flex items-center justify-center text-white font-semibold bg-${color}`;
       chars.push(
-        <li key={index}>
+        <li key={i}>
           <label>
-            <div className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-semibold bg-slate-900 ">
-              {guess && guess[index] ? guess[index].toUpperCase() : ""}
+            <div className={className}>
+              {guess && guess[i] ? guess[i].toUpperCase() : ""}
             </div>
           </label>
         </li>
@@ -24,7 +32,7 @@ const GuessList = ({ guesses }: props) => {
   return (
     <div>
       {[0, 1, 2, 3, 4, 5].map((i) => (
-        <ul className="w-60 flex space-x-4 mb-6 text-base font-medium">
+        <ul key={i} className="w-60 flex space-x-4 mb-6 text-base font-medium">
           {placeChars(guesses[i])}
         </ul>
       ))}

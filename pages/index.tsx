@@ -3,7 +3,7 @@ import Intro from "../components/intro";
 import Board from "../components/board";
 import Layout from "../components/layout";
 import Head from "next/head";
-import Post from "../types/post";
+import Post from "../types/guessResponse";
 
 type Props = {
   allPosts: Post[];

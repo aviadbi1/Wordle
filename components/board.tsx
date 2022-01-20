@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { checkGuess } from "../lib/api";
+import Colors from "../types/colors";
+import GuessResponseType from "../types/guessResponse";
 import GuessList from "./guess-list";
 
 const Board = () => {
-  const [guesses, setGuesses] = useState<string[]>([]);
+  const [guesses, setGuesses] = useState<GuessResponseType[]>([]);
   const [currGuess, setCurrGuess] = useState("");
 
   const clearCurrGuess = () => {
@@ -10,7 +13,9 @@ const Board = () => {
   };
 
   const guessThatWord = () => {
-    setGuesses([...guesses, currGuess]);
+    let a = checkGuess(currGuess);
+    console.log(a);
+    setGuesses([...guesses, a]);
   };
 
   return (
