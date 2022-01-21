@@ -1,27 +1,53 @@
-import { CODE_WORD } from "./constants";
 import GuessResponseType from "../types/guessResponse";
 import Colors from "../types/colors";
 import { WORDS_ARRAY } from "./words";
+import { WORD_LENGTH } from "./constants";
 
 let codeWord = "";
 
 export function checkGuess(guess: string): GuessResponseType {
-  let colors = [];
+  let colors = Array(WORD_LENGTH);
   let correct = true;
+  let occurences = countOccurences(codeWord);
+  console.log(occurences);
 
   for (let i = 0; i < guess.length; i++) {
     const c = guess[i];
     if (c === codeWord[i]) {
-      colors.push(Colors.green);
-    } else if (codeWord.indexOf(c) >= 0) {
-      colors.push(Colors.yellow);
+      colors[i] = Colors.green;
+      occurences[c]--;
+    }
+  }
+
+  for (let i = 0; i < guess.length; i++) {
+    const c = guess[i];
+    if (!colors[i]) {
       correct = false;
-    } else {
-      colors.push(Colors.gray);
-      correct = false;
+      if (codeWord.indexOf(c) >= 0 && occurences[c] > 0) {
+        colors[i] = Colors.yellow;
+        occurences[c]--;
+      } else {
+        colors[i] = Colors.gray;
+      }
     }
   }
   return { correct, colors, guess };
+}
+
+function countOccurences(str: string) {
+  let occurences: any = {};
+  for (let i = 0; i < str.length; i++) {
+    if (!occurences[str[i]]) {
+      let count = 0;
+      for (let j = 0; j < str.length; j++) {
+        if (str[i] === str[j]) {
+          count++;
+        }
+      }
+      occurences[str[i]] = count;
+    }
+  }
+  return occurences;
 }
 
 export function getRandomWord(): string {
