@@ -22,7 +22,7 @@ const Board = () => {
   };
 
   return (
-    <div>
+    <div className="text-center">
       <input
         className="focus:ring-2 focus:ring-blue-500 focus:outline-none mb-4 text-base leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 pl-10 ring-1 ring-slate-200 shadow-sm"
         type="text"
@@ -40,7 +40,7 @@ const Board = () => {
       <GuessList guesses={guesses} />
 
       <div className="flex space-x-4 mb-6 text-sm font-medium">
-        <div className="flex-auto flex space-x-4">
+        <div className="flex flex-auto justify-center  space-x-4">
           <button
             className="h-10 px-6 font-semibold rounded-md bg-black text-white"
             type="submit"

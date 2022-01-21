@@ -42,7 +42,7 @@ const GuessList = ({ guesses }: Props) => {
     let placeholders = [];
     for (let i = 0; i < NUM_OF_GUESSES; i++) {
       placeholders.push(
-        <ul key={i} className="w-60 flex space-x-4 mb-6 text-base font-medium">
+        <ul key={i} className="w-60 m-auto flex space-x-4 mb-6 text-base font-medium">
           {placeChars(guesses[i])}
         </ul>
       );
