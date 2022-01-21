@@ -6,16 +6,16 @@ type Props = {
 };
 
 const Alert = ({ preview }: Props) => {
-  return (
-    <div
-      className={cn("border-b", {
-        "bg-neutral-800 border-neutral-800 text-white": preview,
-        "bg-neutral-50 border-neutral-200": !preview,
-      })}
-    >
-      <Container>
-        <div className="py-2 text-center text-sm">
-          {preview ? (
+  if (preview) {
+    return (
+      <div
+        className={cn("border-b", {
+          "bg-neutral-800 border-neutral-800 text-white": preview,
+          "bg-neutral-50 border-neutral-200": !preview,
+        })}
+      >
+        <Container>
+          <div className="py-2 text-center text-sm">
             <>
               This page is a preview.{" "}
               <a
@@ -26,22 +26,13 @@ const Alert = ({ preview }: Props) => {
               </a>{" "}
               to exit preview mode.
             </>
-          ) : (
-            <>
-              The source code for this wordle is{" "}
-              <a
-                href={`https://github.com/aviadbi1/Wordle`}
-                className="underline hover:text-blue-600 duration-200 transition-colors"
-              >
-                available on GitHub
-              </a>
-              .
-            </>
-          )}
-        </div>
-      </Container>
-    </div>
-  );
+          </div>
+        </Container>
+      </div>
+    );
+  } else {
+    return <></>;
+  }
 };
 
 export default Alert;

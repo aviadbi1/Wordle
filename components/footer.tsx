@@ -1,14 +1,17 @@
 import Container from "./container";
-import { EXAMPLE_PATH } from "../lib/constants";
 
 const Footer = () => {
   return (
     <footer className="bg-neutral-50 border-t border-neutral-200">
       <Container>
-        <div className="py-2 flex flex-col lg:flex-row items-center">
-          <h5 className="text-4xl lg:text-[1rem] font-bold tracking-tighter leading-tight text-center lg:text-left mb-10 lg:mb-0 lg:pr-4 lg:w-1/2">
-            by Aviados
-          </h5>
+        <div className="py-2 text-center text-sm">
+          The source code for this wordle is{" "}
+          <a
+            href={`https://github.com/aviadbi1/Wordle`}
+            className="underline hover:text-blue-600 duration-200 transition-colors"
+          >
+            available on GitHub
+          </a>
         </div>
       </Container>
     </footer>

@@ -1,11 +1,11 @@
-import { WORD_LENGTH } from "../lib/constants";
+import { WORD_LENGTH, NUM_OF_GUESSES } from "../lib/constants";
 import GuessResponseType from "../types/guessResponse";
 
-type props = {
+type Props = {
   guesses: GuessResponseType[];
 };
 
-const GuessList = ({ guesses }: props) => {
+const GuessList = ({ guesses }: Props) => {
   const placeChars = (guessRes: GuessResponseType) => {
     if (!guessRes) {
       guessRes = { guess: "", correct: false, colors: [] };
@@ -38,15 +38,19 @@ const GuessList = ({ guesses }: props) => {
     return chars;
   };
 
-  return (
-    <div>
-      {[0, 1, 2, 3, 4, 5].map((i) => (
+  const generateGuessesPlaceHolder = () => {
+    let placeholders = [];
+    for (let i = 0; i < NUM_OF_GUESSES; i++) {
+      placeholders.push(
         <ul key={i} className="w-60 flex space-x-4 mb-6 text-base font-medium">
           {placeChars(guesses[i])}
         </ul>
-      ))}
-    </div>
-  );
+      );
+    }
+    return placeholders;
+  };
+
+  return <div>{generateGuessesPlaceHolder()}</div>;
 };
 
 export default GuessList;
