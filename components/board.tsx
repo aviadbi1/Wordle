@@ -3,7 +3,6 @@ import { checkGuess, getRandomWord, getTheCodeWord } from "../lib/api";
 import { NUM_OF_GUESSES } from "../lib/constants";
 import GuessResponseType from "../types/guessResponse";
 import GuessList from "./guess-list";
-import Popup from "reactjs-popup";
 import Modal from "./popup";
 
 const Board = () => {
