@@ -9,7 +9,6 @@ export function checkGuess(guess: string): GuessResponseType {
   let colors = Array(WORD_LENGTH);
   let correct = true;
   let occurences = countOccurences(codeWord);
-  console.log(occurences);
 
   for (let i = 0; i < guess.length; i++) {
     const c = guess[i];
@@ -50,6 +49,9 @@ function countOccurences(str: string) {
   return occurences;
 }
 
+export function getTheCodeWord(): string {
+  return codeWord;
+}
 export function getRandomWord(): string {
   const len = WORDS_ARRAY.length;
   codeWord = WORDS_ARRAY[Math.floor(Math.random() * len)];

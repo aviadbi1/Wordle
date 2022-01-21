@@ -1,24 +1,50 @@
 import { useEffect, useState } from "react";
-import { checkGuess, getRandomWord } from "../lib/api";
+import { checkGuess, getRandomWord, getTheCodeWord } from "../lib/api";
+import { NUM_OF_GUESSES } from "../lib/constants";
 import GuessResponseType from "../types/guessResponse";
 import GuessList from "./guess-list";
+import Popup from "reactjs-popup";
+import Modal from "./popup";
 
 const Board = () => {
   const [guesses, setGuesses] = useState<GuessResponseType[]>([]);
   const [currGuess, setCurrGuess] = useState("");
+  const [showModal, setOpen] = useState(false);
+  const [alert, setAlert] = useState({ title: "", text: "", cb: () => {} });
 
   useEffect(() => {
     getRandomWord();
   }, []);
+
+  const closeModal = () => setOpen(false);
+
+  function onShowAlert(title: string, text: string, cb: any) {
+    setAlert({ title, text, cb });
+    setOpen(true);
+  }
 
   const clearCurrGuess = () => {
     setCurrGuess("");
   };
 
   const guessThatWord = () => {
-    let a = checkGuess(currGuess);
-    console.log(a);
-    setGuesses([...guesses, a]);
+    if (guesses.length >= NUM_OF_GUESSES) {
+      onShowAlert(
+        "Nevermind",
+        `Try next time... \nThat word was "${getTheCodeWord()}"`,
+        () => {
+          console.log("here");
+          setGuesses([]);
+          clearCurrGuess();
+        }
+      );
+    }
+    let response = checkGuess(currGuess);
+    setGuesses([...guesses, response]);
+
+    if (response.correct) {
+      onShowAlert("WooHoo", `You managed to it in ${guesses.length} guesses`, () => {});
+    }
   };
 
   return (
@@ -40,7 +66,7 @@ const Board = () => {
       <GuessList guesses={guesses} />
 
       <div className="flex space-x-4 mb-6 text-sm font-medium">
-        <div className="flex flex-auto justify-center  space-x-4">
+        <div className="flex flex-auto justify-center space-x-4">
           <button
             className="h-10 px-6 font-semibold rounded-md bg-black text-white"
             type="submit"
@@ -57,6 +83,14 @@ const Board = () => {
           </button>
         </div>
       </div>
+
+      <Modal
+        showModal={showModal}
+        title={alert.title}
+        text={alert.text}
+        cb={alert.cb}
+        closeModal={closeModal}
+      />
     </div>
   );
 };

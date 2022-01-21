@@ -12,6 +12,9 @@ const Footer = () => {
           >
             available on GitHub
           </a>
+          <p className="bg-fruit-salad-500"></p>
+          <p className="bg-sundance-500"></p>
+          <p className="bg-gunsmoke-500"></p>
         </div>
       </Container>
     </footer>
