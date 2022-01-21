@@ -1,6 +1,3 @@
-import Alert from "react-popup-alert";
-import { useState } from "react";
-
 interface Props {
   showModal: boolean;
   title: string;
