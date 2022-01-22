@@ -2,7 +2,7 @@ import Container from "./container";
 
 const Footer = () => {
   return (
-    <footer className="bg-neutral-50 border-t border-neutral-200">
+    <footer className="hidden md:block bg-neutral-50 border-t border-neutral-200">
       <Container>
         <div className="py-2 text-center text-sm">
           The source code for this wordle is{" "}
