@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { checkGuess, getRandomWord, getTheCodeWord } from "../lib/api";
 import { NUM_OF_GUESSES } from "../lib/constants";
 import GuessResponseType from "../types/guessResponse";
+import GuessButtons from "./guess-buttons";
 import GuessList from "./guess-list";
 import Modal from "./popup";
 
@@ -26,23 +27,42 @@ const Board = () => {
     setCurrGuess("");
   };
 
+  const newCodeWord = () => {
+    setGuesses([]);
+    clearCurrGuess();
+    getRandomWord();
+  };
+
   const guessThatWord = () => {
-    if (guesses.length >= NUM_OF_GUESSES) {
+    if (guesses.length > NUM_OF_GUESSES) {
       onShowAlert(
         "Nevermind",
-        `Try next time... \nThat word was "${getTheCodeWord()}"`,
+        `Can't guess no more :( \nThat word was "${getTheCodeWord()}"`,
         () => {
-          console.log("here");
-          setGuesses([]);
           clearCurrGuess();
         }
       );
-    }
-    let response = checkGuess(currGuess);
-    setGuesses([...guesses, response]);
+    } else {
+      let response = checkGuess(currGuess);
+      setGuesses([...guesses, response]);
 
-    if (response.correct) {
-      onShowAlert("WooHoo", `You managed to it in ${guesses.length} guesses`, () => {});
+      if (response.correct) {
+        onShowAlert(
+          "WooHoo",
+          `You managed to it in ${guesses.length + 1} guesses`,
+          () => {
+            clearCurrGuess();
+          }
+        );
+      } else if (guesses.length == NUM_OF_GUESSES) {
+        onShowAlert(
+          "Nevermind",
+          `Try next time... \nThat word was "${getTheCodeWord()}"`,
+          () => {
+            clearCurrGuess();
+          }
+        );
+      }
     }
   };
 
@@ -64,24 +84,7 @@ const Board = () => {
       />
       <GuessList guesses={guesses} />
 
-      <div className="flex space-x-4 mb-6 text-sm font-medium">
-        <div className="flex flex-auto justify-center space-x-4">
-          <button
-            className="h-10 px-6 font-semibold rounded-md bg-black text-white"
-            type="submit"
-            onClick={guessThatWord}
-          >
-            Guess
-          </button>
-          <button
-            className="h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900"
-            type="button"
-            onClick={clearCurrGuess}
-          >
-            Clear Guess
-          </button>
-        </div>
-      </div>
+      <GuessButtons action={guessThatWord} clear={clearCurrGuess} restart={newCodeWord} />
 
       <Modal
         showModal={showModal}
