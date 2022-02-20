@@ -1,11 +1,13 @@
 import { WORD_LENGTH, NUM_OF_GUESSES } from "../lib/constants";
+import Colors from "../types/colors";
 import GuessResponseType from "../types/guessResponse";
 
 type Props = {
   guesses: GuessResponseType[];
+  currGuess: string;
 };
 
-const GuessList = ({ guesses }: Props) => {
+const GuessList = ({ currGuess, guesses }: Props) => {
   const placeChars = (guessRes: GuessResponseType) => {
     if (!guessRes) {
       guessRes = { guess: "", correct: false, colors: [] };
@@ -14,13 +16,13 @@ const GuessList = ({ guesses }: Props) => {
     let colors = guessRes.colors;
     let chars = [];
     for (let i = 0; i < WORD_LENGTH; i++) {
-      let color = colors && colors[i] ? colors[i] : "gunsmoke";
+      let color = colors && colors[i] ? colors[i] : Colors.nothing;
       chars.push(
-        <li key={i}>
+        <li key={i} className="">
           <label>
             {guess && guess[i] ? (
               <div
-                className={`w-10 h-10 rounded-lg flex items-center justify-center text-white font-semibold bg-${color}-500`}
+                className={`w-10 h-10 rounded-lg flex items-center justify-center text-white font-semibold bg-${color}`}
               >
                 {guess[i].toUpperCase()}
               </div>
@@ -41,9 +43,15 @@ const GuessList = ({ guesses }: Props) => {
   const generateGuessesPlaceHolder = () => {
     let placeholders = [];
     for (let i = 0; i < NUM_OF_GUESSES; i++) {
+      let guessResponse: GuessResponseType = { guess: "", correct: false, colors: [] };
+      if (i < guesses.length) {
+        guessResponse = guesses[i];
+      } else if (i == guesses.length) {
+        guessResponse.guess = currGuess;
+      }
       placeholders.push(
         <ul key={i} className="w-60 m-auto flex space-x-4 mb-6 text-base font-medium">
-          {placeChars(guesses[i])}
+          {placeChars(guessResponse)}
         </ul>
       );
     }

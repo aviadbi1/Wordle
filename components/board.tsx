@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { checkGuess, getRandomWord, getTheCodeWord } from "../lib/api";
-import { NUM_OF_GUESSES } from "../lib/constants";
+import { NUM_OF_GUESSES, WORD_LENGTH } from "../lib/constants";
+import Colors from "../types/colors";
 import GuessResponseType from "../types/guessResponse";
 import GuessButtons from "./guess-buttons";
 import GuessList from "./guess-list";
+import Keyboard from "./keyboard";
 import Modal from "./popup";
 
 const Board = () => {
   const [guesses, setGuesses] = useState<GuessResponseType[]>([]);
+  const [lettersChosen, setLetters] = useState({});
   const [currGuess, setCurrGuess] = useState("");
   const [showModal, setOpen] = useState(false);
   const [alert, setAlert] = useState({ title: "", text: "", cb: () => {} });
@@ -25,6 +28,7 @@ const Board = () => {
 
   const clearCurrGuess = () => {
     setCurrGuess("");
+    setLetters({});
   };
 
   const newCodeWord = () => {
@@ -33,6 +37,39 @@ const Board = () => {
     getRandomWord();
   };
 
+  const addLetter = (event: any) => {
+    if (currGuess.length < WORD_LENGTH) {
+      setCurrGuess(currGuess.concat(event.target.innerText));
+    }
+  };
+
+  const delLetter = () => {
+    if (currGuess.length > 0) {
+      setCurrGuess(currGuess.substring(0, currGuess.length - 1));
+    }
+  };
+
+  const updateKeyboardColors = (colors: string[]) => {
+    let updatedLetters = {};
+    for (let i = 0; i < colors.length; i++) {
+      const letter = currGuess.charAt(i);
+      let newColor = colors[i];
+      let oldColor = updatedLetters[letter]
+        ? updatedLetters[letter]
+        : lettersChosen[letter];
+      if (
+        oldColor != Colors.green &&
+        (oldColor != Colors.yellow || newColor != Colors.gray)
+      ) {
+        updatedLetters = {
+          ...updatedLetters,
+          [letter]: newColor,
+        };
+      }
+    }
+
+    setLetters({ ...lettersChosen, ...updatedLetters });
+  };
   const guessThatWord = () => {
     if (guesses.length > NUM_OF_GUESSES) {
       onShowAlert(
@@ -42,8 +79,9 @@ const Board = () => {
           clearCurrGuess();
         }
       );
-    } else {
+    } else if (currGuess.length == WORD_LENGTH) {
       let response = checkGuess(currGuess);
+      updateKeyboardColors(response.colors);
       setGuesses([...guesses, response]);
 
       if (response.correct) {
@@ -63,28 +101,20 @@ const Board = () => {
           }
         );
       }
+      setCurrGuess("");
     }
   };
 
   return (
-    <div className="text-center">
-      <input
-        className="focus:ring-2 focus:ring-blue-500 focus:outline-none mb-4 text-base leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 pl-10 ring-1 ring-slate-200 shadow-sm"
-        type="text"
-        placeholder="Guess..."
-        value={currGuess}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            guessThatWord();
-          }
-        }}
-        onChange={(e) =>
-          setCurrGuess(e.target.value.trim().substring(0, 5).toUpperCase())
-        }
+    <div className="text-center h-screen">
+      <GuessList currGuess={currGuess} guesses={guesses} />
+      <Keyboard
+        onEnter={guessThatWord}
+        lettersChosen={lettersChosen}
+        addLetter={addLetter}
+        delLetter={delLetter}
       />
-      <GuessList guesses={guesses} />
-
-      <GuessButtons action={guessThatWord} clear={clearCurrGuess} restart={newCodeWord} />
+      <GuessButtons restart={newCodeWord} />
 
       <Modal
         showModal={showModal}
