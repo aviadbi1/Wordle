@@ -1,6 +1,12 @@
 import Colors from "../types/colors";
 
-const Letter = ({ value, lettersChosen, letterClick }) => {
+type Props = {
+  value: string;
+  lettersChosen: any;
+  letterClick: any;
+};
+
+const Letter = ({ value, lettersChosen, letterClick }: Props) => {
   return (
     <button
       className={`key font-semibold bg-${

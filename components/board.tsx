@@ -10,7 +10,7 @@ import Modal from "./popup";
 
 const Board = () => {
   const [guesses, setGuesses] = useState<GuessResponseType[]>([]);
-  const [lettersChosen, setLetters] = useState({});
+  const [lettersChosen, setLetters] = useState<any>({});
   const [currGuess, setCurrGuess] = useState("");
   const [showModal, setOpen] = useState(false);
   const [alert, setAlert] = useState({ title: "", text: "", cb: () => {} });
@@ -50,7 +50,7 @@ const Board = () => {
   };
 
   const updateKeyboardColors = (colors: string[]) => {
-    let updatedLetters = {};
+    let updatedLetters: any = {};
     for (let i = 0; i < colors.length; i++) {
       const letter = currGuess.charAt(i);
       let newColor = colors[i];

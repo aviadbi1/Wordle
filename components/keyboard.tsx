@@ -1,6 +1,13 @@
 import Letter from "./letter";
 
-const Keyboard = ({ onEnter, lettersChosen, addLetter, delLetter }) => {
+type Props = {
+  onEnter: any;
+  lettersChosen: any;
+  addLetter: any;
+  delLetter: any;
+};
+
+const Keyboard = ({ onEnter, lettersChosen, addLetter, delLetter }: Props) => {
   return (
     <div>
       <Letter value="Q" lettersChosen={lettersChosen} letterClick={addLetter} />
