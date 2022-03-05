@@ -106,7 +106,7 @@ const Board = () => {
   };
 
   return (
-    <div className="text-center h-screen">
+    <div className="text-center mb-3">
       <GuessList currGuess={currGuess} guesses={guesses} />
       <Keyboard
         onEnter={guessThatWord}

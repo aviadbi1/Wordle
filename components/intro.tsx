@@ -1,6 +1,6 @@
 const Intro = () => {
   return (
-    <section className="flex-col md:flex-row flex items-center md:justify-between mt-7 mb-10 md:mb-8">
+    <section className="flex-col md:flex-row flex items-center md:justify-between mt-5 mb-7 md:mb-8">
       <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8">
         Wordle.
       </h1>

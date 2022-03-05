@@ -50,7 +50,10 @@ const GuessList = ({ currGuess, guesses }: Props) => {
         guessResponse.guess = currGuess;
       }
       placeholders.push(
-        <ul key={i} className="w-60 m-auto flex space-x-4 mb-6 text-base font-medium">
+        <ul
+          key={i}
+          className="w-60 m-auto flex space-x-4 mb-2 md:mb-6 text-base font-medium"
+        >
           {placeChars(guessResponse)}
         </ul>
       );

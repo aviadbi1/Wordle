@@ -9,7 +9,7 @@ type Props = {
 const Letter = ({ value, lettersChosen, letterClick }: Props) => {
   return (
     <button
-      className={`key font-semibold bg-${
+      className={`key text text-sm md:text-sm font-semibold bg-${
         lettersChosen[value] ? lettersChosen[value] : Colors.nothing
       }`}
       onClick={letterClick}
